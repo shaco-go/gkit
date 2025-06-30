@@ -58,7 +58,26 @@ func createAndPushTag(message string, versionType string) error {
 	if err != nil {
 		fmt.Println("Failed to get remote tags:", err)
 		fmt.Println("Will use default version v0.0.1")
-		latestTag = "v0.0.1"
+		// 直接使用v0.0.1作为新标签，不进行版本增量
+		newTag := "v0.0.1"
+		fmt.Printf("New tag version: %s\n", newTag)
+
+		// 3. Create new tag
+		fmt.Printf("Creating tag %s...\n", newTag)
+		err = createTag(newTag, message)
+		if err != nil {
+			return fmt.Errorf("failed to create tag: %v", err)
+		}
+
+		// 4. Push tag to remote repository
+		fmt.Printf("Pushing tag %s to remote repository...\n", newTag)
+		err = pushTag(newTag)
+		if err != nil {
+			return fmt.Errorf("failed to push tag: %v", err)
+		}
+
+		fmt.Printf("Tag %s has been successfully created and pushed to remote repository\n", newTag)
+		return nil
 	} else {
 		fmt.Printf("Latest tag found: %s\n", latestTag)
 	}
