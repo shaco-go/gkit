@@ -96,12 +96,12 @@ func (d itemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type model struct {
-	spinner       spinner.Model
-	list          list.Model
-	output        []string
-	readOutput    bool
-	quitting      bool
-	loading       bool
+	spinner    spinner.Model
+	list       list.Model
+	output     []string
+	readOutput bool
+	quitting   bool
+	loading    bool
 }
 
 func (m model) Init() tea.Cmd {
@@ -308,7 +308,7 @@ func goGetPackage(packageName string) {
 
 	// 启动搜索协程
 	go func() {
-		items, err := searchPkgGo("errors")
+		items, err := searchPkgGo(packageName)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
